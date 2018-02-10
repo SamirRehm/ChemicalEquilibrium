@@ -73,44 +73,15 @@ public class Chemistry extends Application {
     public void start(Stage stage) {
         Scene scene = new Scene(new Group());
         Layout.setStage(stage);
-        
-        final Label label = new Label("Chemical Equilibrium");
-        label.setFont(new Font("Arial", 20));
+        final Label label = Layout.setLabel();
  
         table.setEditable(true);
         
-        TableColumn<Reaction, String> ReactantsColumn = new TableColumn<>("Reactants");
-        ReactantsColumn.setMinWidth(100);
-        
-        ReactantsColumn.setCellFactory(TextFieldTableCell.<Reaction>forTableColumn());
-        ReactantsColumn.setOnEditCommit(
-            (CellEditEvent<Reaction, String> t) -> {
-                ((Reaction) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        ).setReactant(t.getNewValue(), 2);
-        });
-        
- 
- 
-        TableColumn<Reaction, String> arrowColumn = 
-            new TableColumn<>("⇌");
-        arrowColumn.setMinWidth(100);
-        arrowColumn.setCellValueFactory(
-            new PropertyValueFactory<>("lastName"));
-       arrowColumn.setCellFactory(TextFieldTableCell.<Reaction>forTableColumn());
-       
+        TableColumn<Reaction, String> ReactantsColumn = Layout.initializeReactantsColumn();
+        TableColumn<Reaction, String> arrowColumn = Layout.initializeArrowColumn();
+        TableColumn<Reaction, String> ProductsColumn = Layout.initializeProductsColumn();
             TableColumn nReactant = createReactantColumn(ReactantsColumn);
             ReactantsColumn.getColumns().add(nReactant);
- 
-        TableColumn<Reaction, String> ProductsColumn = new TableColumn<>("Products");
-        ProductsColumn.setMinWidth(200);
-        ProductsColumn.setCellFactory(TextFieldTableCell.<Reaction>forTableColumn());       
-        ProductsColumn.setOnEditCommit(
-            (CellEditEvent<Reaction, String> t) -> {
-                ((Reaction) t.getTableView().getItems().get(
-                        t.getTablePosition().getRow())
-                        ).setProduct(t.getNewValue(), 1);
-        });
         
         TableColumn nProduct = createProductColumn(ProductsColumn);
         ProductsColumn.getColumns().add(nProduct);
